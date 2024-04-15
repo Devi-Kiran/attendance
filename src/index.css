@@ -11,3 +11,90 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  color: red;
+}
+
+/* Example CSS to style react-calendar */
+
+/* Style the entire calendar container */
+.react-calendar {
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 650px !important;
+}
+
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+
+/* Style the header containing month and navigation buttons */
+/* .react-calendar__navigation {
+  background-color: #f0f0f0;
+  padding: 10px;
+} */
+
+/* Style the navigation buttons */
+/* .react-calendar__navigation button {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+} */
+
+/* Style the calendar grid */
+/* .react-calendar__month-view {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 5px !important;
+} */
+
+/* Style individual calendar days */
+.react-calendar__month-view__days__day {
+  background-color: #fff;
+  border: 1px solid #ccc !important;
+  border-radius: 5px;
+  height: 100px !important;
+  padding: 2px !important;
+}
+
+.present-day {
+  background-color: rgba(65, 176, 110,0.5) !important;
+}
+
+.absent-day {
+  background-color: rgba(231, 41, 41,0.5) !important;
+}
+
+.saturday {
+  color: black !important;
+}
+
+.half-day {
+  background-color: rgba(235, 244, 0,0.5) !important;
+}
+
+.react-calendar__tile--active {
+  background-color: lightgrey !important;
+  color: black !important;
+}
+
+/* Style the active day */
+/* .react-calendar__month-view__days__day--active {
+  background-color: #f0f0f0 !important;
+} */
+
+/* Style the tile content */
+/* .react-calendar__tileContent {
+  font-size: 14px;
+  color: #666;
+} */
+
