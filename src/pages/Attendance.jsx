@@ -13,17 +13,37 @@ const MyCalendar = () => {
 
     const updateUser = async (id, attendance) => {
         const employerDoc = doc(db, "employers", id);
-        const newFields = {attendance: [...attendance, {
-            date: 'hello',
-            status: 'hii',
-            fullDay: true,
-            halfDay: false,
-            loginTime: 'hoo',
-            logoutTime: 'namasthe',
-            HourseOfWork: 'vanakkam',
-        }]}
+        const date = new Date();
 
-        await updateDoc(employerDoc, newFields);
+        const isPresent = attendance.find(data => {
+            return (new Date(data.date).getTime()) === date.setHours(0,0,0,0)
+        })
+
+        if(!isPresent) {
+            const newFields = {attendance: [...attendance, {
+                date: date.toDateString(),
+                status: 'present',
+                fullDay: false,
+                halfDay: false,
+                loginTime: date.toTimeString(),
+                logoutTime: '',
+                HourseOfWork: '',
+            }]}
+    
+             await updateDoc(employerDoc, newFields);
+         } else {
+            const updatedData = attendance.map(data => {
+                if(new Date(data.date).getTime() === new Date(isPresent.date).getTime()) {
+                    console.log(new Date(data.date).getTime() === new Date(isPresent.date).getTime());
+                    return {...data, logoutTime: date.toTimeString(), fullDay: true, HourseOfWork: '8'}
+                }
+                return data;
+            })
+            console.log(updatedData);
+            //// const newFields = {attendance: [...attendance, {...isPresent, logoutTime: date.toTimeString()}]}
+            //// await updateDoc(employerDoc, newFields);
+        }
+      
     }
 
     useEffect(() => {
@@ -35,53 +55,61 @@ const MyCalendar = () => {
         getEmployers();
     }, []);
 
-//   const [attendanceData, setAttendanceData] = useState([
-//     { date: new Date(2024, 3, 9), status: "present", halfDay: false, incompleteDay: false },
-//     { date: new Date(2024, 3, 10), status: "present", halfDay: true, incompleteDay: false },
-//     { date: new Date(2024, 3, 11), status: "present", halfDay: false, incompleteDay: true },
-//     { date: new Date(2024, 3, 12), status: "absent", halfDay: false, incompleteDay: false },
-//     { date: new Date(2024, 3, 13), status: "present", halfDay: false, incompleteDay: true },
-//     { date: new Date(2024, 3, 15), status: "absent", halfDay: false, incompleteDay: false },
-//   ]);
+ const date = new Date();
 
-//   const tileContent = ({ date, view }) => {
-//     const attendance = attendanceData.find(
-//       (item) => item.date.getTime() === date.getTime()
-//     );
-//     if (attendance) {
-//         return (
-//             <p style={{textTransform: 'capitalize'}}>
-//                 {attendance.status} <br/>
-//                 {attendance.halfDay ? ' (Half Day)' : ''}
-//                 {attendance.incompleteDay ? ' (Half Day)' : ''}
-//             </p>
-//         );
-//     }
-//     return null;
-//   };
+ const x = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-//   const tileClassName = ({ date }) => {
-//     const attendance = attendanceData.find(
-//       (item) => item.date.getTime() === date.getTime()
-//     );
+  const [attendanceData, setAttendanceData] = useState([
+    { date: new Date(2024, 3, 9), status: "present", halfDay: false, incompleteDay: false },
+    { date: new Date(2024, 3, 10), status: "present", halfDay: true, incompleteDay: false },
+    { date: new Date(2024, 3, 11), status: "present", halfDay: false, incompleteDay: true },
+    { date: new Date(2024, 3, 12), status: "absent", halfDay: false, incompleteDay: false },
+    { date: new Date(2024, 3, 13), status: "present", halfDay: false, incompleteDay: true },
+    { date: new Date(2024, 3, 15), status: "absent", halfDay: false, incompleteDay: false },
+    { date: new Date((new Date()).setHours(0, 0, 0, 0)), status: "absent", halfDay: false, incompleteDay: false },
+  ]);
 
-//     if (date.getDay() === 6) { 
-//         return 'saturday';
-//     }
+  const tileContent = ({ date, view }) => {
+    // console.log(date);
+    const attendance = attendanceData.find(
+      (item) => item.date.getTime() === date.getTime()
+    );
+    if (attendance) {
+        return (
+            <p style={{textTransform: 'capitalize'}}>
+                {attendance.status} <br/>
+                {attendance.halfDay ? ' (Half Day)' : ''}
+                {attendance.incompleteDay ? ' (Half Day)' : ''}
+            </p>
+        );
+    }
+    return null;
+  };
 
-//     if (attendance) {
-//         if (attendance.halfDay) {
-//             return 'half-day';
-//         } else if(attendance.incompleteDay) {
-//             return 'incomplete-day';
-//         } else if (attendance.status === 'present') {
-//             return 'present-day';
-//         } else if (attendance.status === 'absent') {
-//             return 'absent-day';
-//         }
-//     }
-//     return null;
-//   };
+  const tileClassName = ({ date }) => {
+    const attendance = attendanceData.find(item => {
+        return item.date.getTime() === date.getTime()
+    });
+
+    // console.log(attendance);
+
+    if (date.getDay() === 6) { 
+        return 'saturday';
+    }
+
+    if (attendance) {
+        if (attendance.halfDay) {
+            return 'half-day';
+        } else if(attendance.incompleteDay) {
+            return 'incomplete-day';
+        } else if (attendance.status === 'present') {
+            return 'present-day';
+        } else if (attendance.status === 'absent') {
+            return 'absent-day';
+        }
+    }
+    return null;
+  };
 
     const columns = [
         { title: "ID", field: "id", },
@@ -128,9 +156,9 @@ const MyCalendar = () => {
             </ThemeProvider>
 
             
-            {/* <Calendar
+            <Calendar
                 tileClassName={tileClassName} tileContent={tileContent}
-            /> */}
+            />
         </div>
     );
 };
