@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore } from "@firebase/firestore";
+import { getFID } from "web-vitals";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwhwT4QgtqwsW5JcFdjWagUtxht55G7D8",
@@ -14,6 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
+export const db = getFirestore(app);
 
 
 
