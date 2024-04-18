@@ -4,6 +4,7 @@ import About from './pages/Aboute';
 import Attendance from './pages/Attendance';
 import Photo from './pages/Photo';
 import AddEmployer from './pages/AddEmployer';
+import EachAttendance from './pages/EachAttendance';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/attendance" element={<Attendance/>} />
+        <Route path="/attendance/:id" element={<EachAttendance/>} />
         <Route path="/add-employer" element={<AddEmployer/>} />
         <Route path="/photo" element={<Photo/>} />
         <Route path="/about" element={<About/>} />

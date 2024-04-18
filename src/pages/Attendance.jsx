@@ -15,12 +15,10 @@ const MyCalendar = () => {
         const [hours1, minutes1, seconds1] = loginTime.split(":").map(Number);
         const [hours2, minutes2, seconds2] = logoutTime.split(":").map(Number);
 
-        // Calculate the difference in hours, minutes, and seconds
         let hourDiff = hours2 - hours1;
         let minuteDiff = minutes2 - minutes1;
         let secondDiff = seconds2 - seconds1;
 
-        // Adjust for negative differences
         if (secondDiff < 0) {
             secondDiff += 60;
             minuteDiff--;
@@ -66,52 +64,54 @@ const MyCalendar = () => {
             await updateDoc(employerDoc, loginData);
         } 
         else {
-            const logoutData = attendance.map((data) => {
-                if (
-                    new Date(data.date).getTime() === new Date(isPresent.date).getTime()
-                ) {
-                    return {
-                        ...data,
-                        logoutTime: new Date().toTimeString().split(" ")[0],
-                        fullDay: true,
-                        hoursOfWork: "8",
-                    };
-                }
-                return data;
-            });
+            function logoutData(fullDay,halfDay, hoursOfWork) {
+                return attendance.map((data) => {
+                    if (
+                        new Date(data.date).getTime() === new Date(isPresent.date).getTime()
+                    ) {
+                        return {
+                            ...data,
+                            logoutTime: new Date().toTimeString().split(" ")[0],
+                            halfDay,
+                            fullDay,
+                            hoursOfWork,
+                        };
+                    }
+                    return data;
+                });
+            }
 
             const workedTime = findHoursOfWork(
                 isPresent.loginTime,
-                "17:08:00"
+                "02:08:00"
                 // new Date().toTimeString().split(" ")[0]
             );
 
-            console.log(workedTime);
+            const workedHours = `${workedTime.hours}.${(workedTime.minutes / 60) * 100}`;
 
             if (workedTime.hours >= 8) {
-                console.log("completed full day");
+                console.log(logoutData(true,false, workedHours));
+                await updateDoc(employerDoc, {attendance: logoutData(true,false, workedHours)});
             } else if (workedTime.hours >= 5 && workedTime.minutes >= 30) {
-                console.log("un completed");
+                console.log("uncompleted");
             } else if (workedTime.hours >= 4) {
                 console.log("halfday");
             } else {
                 console.log("nothing");
             }
-            }
+        }
     };
 
     useEffect(() => {
         const getEmployers = async () => {
-        const data = await getDocs(employersCollectionRef);
-        setEmployers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+            const data = await getDocs(employersCollectionRef);
+            setEmployers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
 
         getEmployers();
     }, []);
 
     const date = new Date();
-
-    const x = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     const [attendanceData, setAttendanceData] = useState([
         {
@@ -231,17 +231,17 @@ const MyCalendar = () => {
     ];
 
     return (
-        <div>
-        <ThemeProvider theme={defaultMaterialTheme}>
-            <MaterialTable
-            columns={columns}
-            title="Employee Data"
-            data={employers}
-            />
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={defaultMaterialTheme}>
+                <MaterialTable
+                columns={columns}
+                title="Employee Data"
+                data={employers}
+                />
+            </ThemeProvider>
 
-        <Calendar tileClassName={tileClassName} tileContent={tileContent} />
-        </div>
+            <Calendar tileClassName={tileClassName} tileContent={tileContent} />
+        </>
     );
 };
 
