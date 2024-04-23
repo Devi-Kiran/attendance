@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,6 +30,10 @@ body {
   padding: 2px !important;
 }
 
+.saturday {
+  color: black !important;
+}
+
 .present-day {
   color: rgb(65, 176, 110) !important;
 }
@@ -34,9 +42,6 @@ body {
   color: rgb(231, 41, 41) !important;
 }
 
-.saturday {
-  color: black !important;
-}
 
 .half-day {
   color: rgb(177, 166, 10) !important;
