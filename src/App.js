@@ -15,32 +15,30 @@ function App() {
   const [isFourPM, setIsFourPM] = useState(false);
 
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
+    const timerID = setInterval(() => {
+      const newTime = new Date();
+      setTime(newTime);
+    }, 1000);
     return () => clearInterval(timerID);
   }, []);
 
   useEffect(() => {
-    if (time.getHours() >= 16 && time.getMinutes() >= 30 && !isFourPM) {
+    if (time.getHours() >= 16 && time.getMinutes() >= 0 && !isFourPM) {
       setIsFourPM(true);
     }
   }, [time, isFourPM]);
-
-  function tick() {
-    const newTime = new Date();
-    setTime(newTime);
-  }
 
   return (
     <div className="App">
       <ToastContainer />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        {/* <Route path="/" element={<Login />} />
+        <Route path="/" element={<Signup />} /> */}
         <Route
-          path="/attendance"
+          path="/"
           element={<Attendance time={time.toLocaleTimeString()} isFourPM={isFourPM} />}
         />
-        <Route path="/attendance/:id" element={<EachAttendance />} />
+        <Route path="/:id" element={<EachAttendance />} />
         <Route path="/add-employer" element={<AddEmployer />} />
         
         <Route path="/about" element={<About />} />

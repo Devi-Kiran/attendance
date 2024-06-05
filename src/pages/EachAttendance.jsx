@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import Calendar from "react-calendar";
 import MainLayout from "../components/layouts/MainLayout";
 import Loading from "../components/Loading";
+import SalaryChart from "../components/SalaryChart";
 
-function EachAttendance() {
+const EachAttendance = () => {
   const { id } = useParams();
   const employersCollectionRef = collection(db, "employers");
   const [employer, setEmployer] = useState([]);
@@ -16,13 +17,16 @@ function EachAttendance() {
     const getEmployer = async () => {
       try {
         const data = await getDocs(employersCollectionRef);
-        const employers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const employers = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
         setEmployer(() => {
           return employers.find((employer) => {
             return employer.id === id;
           });
         });
-        setLoading(false)
+        setLoading(false);
       } catch (e) {
         console.log(e.message);
       }
@@ -80,7 +84,9 @@ function EachAttendance() {
   return (
     <>
       <MainLayout>
-        {loading ? <Loading/> : (
+        {loading ? (
+          <Loading />
+        ) : (
           <>
             <div class="rounded-md bg-indigo-600 text-white font-semibold mb-4">
               <div class="border-b border-gray-900/10 p-2">
@@ -88,27 +94,29 @@ function EachAttendance() {
                   <div class="sm:col-span-2 md:col-span-3 sm:col-start-1">
                     Employer Name: {employer.name}
                   </div>
-    
+
                   <div class="sm:col-span-2 md:col-span-3">
                     Email: {employer.email} <br />
                   </div>
-    
+
                   <div class="sm:col-span-2 md:col-span-3">
                     Phone: {employer.phone}
                   </div>
-    
+
                   <div class="sm:col-span-2 md:col-span-3">
                     Salary P/A: {employer.salaryPerAnnum}
                   </div>
                 </div>
               </div>
             </div>
-    
+
             <Calendar
               tileContent={tileContent}
               tileClassName={tileClassName}
               onClickDay={(value, event) => console.log(value, event)}
             />
+
+            <SalaryChart attendanceData={attendanceData}/>
           </>
         )}
       </MainLayout>
@@ -116,4 +124,4 @@ function EachAttendance() {
   );
 }
 
-export default EachAttendance;
+export default memo(EachAttendance);

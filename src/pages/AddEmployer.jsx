@@ -30,18 +30,18 @@ function AddEmployer() {
   return (
     <>
       <MainLayout>
-        <form onSubmit={(e) => e.preventDefault()} method="post">
-          <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3 md:col-span-2 sm:col-start-1">
+        <htmlForm onSubmit={(e) => e.preventDefault()} method="post">
+          <div className="space-y-12">
+            <div className="border-b border-gray-900/10 pb-12">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3 md:col-span-2 sm:col-start-1">
                   <label
-                    for="employerName"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="employerName"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Employer Name
                   </label>
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <input
                       type="text"
                       value={employerDetails.name}
@@ -52,20 +52,20 @@ function AddEmployer() {
                         }))
                       }
                       id="employerName"
-                      autocomplete="off"
-                      class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      autoComplete="off"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
 
-                <div class="sm:col-span-3 md:col-span-2">
+                <div className="sm:col-span-3 md:col-span-2">
                   <label
-                    for="email"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Email
                   </label>
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <input
                       type="text"
                       id="email"
@@ -76,20 +76,20 @@ function AddEmployer() {
                           email: e.target.value,
                         }))
                       }
-                      autocomplete="off"
-                      class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      autoComplete="off"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
 
-                <div class="sm:col-span-3 md:col-span-2">
+                <div className="sm:col-span-3 md:col-span-2">
                   <label
-                    for="phone"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="phone"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Phone
                   </label>
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <input
                       type="tel"
                       value={employerDetails.phone}
@@ -100,20 +100,20 @@ function AddEmployer() {
                         }))
                       }
                       id="phone"
-                      autocomplete="off"
-                      class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      autoComplete="off"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
 
-                <div class="sm:col-span-3 md:col-span-2">
+                <div className="sm:col-span-3 md:col-span-2">
                   <label
-                    for="salary"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="salary"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Salary P/A
                   </label>
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <input
                       type="number"
                       id="salary"
@@ -124,21 +124,21 @@ function AddEmployer() {
                           salaryPerAnnum: e.target.value,
                         }))
                       }
-                      autocomplete="off"
+                      autoComplete="off"
                       placeholder="In INR"
-                      class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
 
-                <div class="sm:col-span-3 md:col-span-2">
+                <div className="sm:col-span-3 md:col-span-2">
                   <label
-                    for="attendance-code"
-                    class="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="attendance-code"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Attendance Code
                   </label>
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <input
                       type="text"
                       id="attendance-code"
@@ -149,8 +149,8 @@ function AddEmployer() {
                           attendanceCode: e.target.value,
                         }))
                       }
-                      autocomplete="off"
-                      class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      autoComplete="off"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -158,23 +158,23 @@ function AddEmployer() {
             </div>
           </div>
 
-          <div class="mt-6 flex items-center justify-end gap-x-6">
+          <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
               onClick={() => setEmployerDetails(employerData)}
-              class="text-sm font-semibold leading-6 text-gray-900"
+              className="text-sm font-semibold leading-6 text-gray-900"
             >
               Cancel
             </button>
             <button
               type="submit"
               onClick={createEmployer}
-              class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Save
             </button>
           </div>
-        </form>
+        </htmlForm>
       </MainLayout>
     </>
   );

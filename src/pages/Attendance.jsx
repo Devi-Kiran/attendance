@@ -56,9 +56,9 @@ const MyCalendar = ({ isFourPM, time }) => {
               });
             }
             xyz();
-            console.log("Attendance updated for user: " + obj.id);
+            toast.success("Updated Absent Employers");
           } catch (error) {
-            console.error("Error updating attendance: ", error);
+            toast.error("something went wrong");
           }
         }
       }
