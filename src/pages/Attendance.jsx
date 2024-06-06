@@ -15,61 +15,99 @@ import MainLayout from "../components/layouts/MainLayout";
 import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 
-const MyCalendar = ({ isFourPM, time }) => {
+const MyCalendar = ({ isFourPM = false }) => {
   const defaultMaterialTheme = createTheme();
   const [employers, setEmployers] = useState([]);
   const [loading, setLoading] = useState(true);
   const employersCollectionRef = collection(db, "employers");
 
-  function updateAbsentAttendance(data) {
-    const currentDate = new Date().toDateString();
+  // function updateAbsentAttendance(data) {
+  //   data.forEach((employerData) => {
+  //     if (employerData.hasOwnProperty("attendance")) {
+  //       const lastUpdatedAttendanceDate = employerData.attendance[
+  //         employerData.attendance.length - 1
+  //       ]?.date
+  //         ? new Date(
+  //             employerData.attendance[employerData.attendance.length - 1]?.date
+  //           ).toISOString()
+  //         : false;
 
-    data.forEach((obj) => {
-      if (obj.hasOwnProperty("attendance")) {
-        let currentDateExists = false;
+  //       const updatedData = fillMissingDates(
+  //         employerData.attendance,
+  //         lastUpdatedAttendanceDate
+  //       );
 
-        obj.attendance.forEach((entry) => {
-          if (entry.date === currentDate) {
-            currentDateExists = true;
-          }
-        });
+  //       try {
+  //         const employerDoc = doc(db, "employers", employerData.id);
+  //         async function xyz() {
+  //           await updateDoc(employerDoc, {
+  //             attendance: updatedData,
+  //           });
+  //         }
+  //         xyz();
+  //         toast.success("Updated Absent Employers");
+  //       } catch (error) {
+  //         toast.error("something went wrong");
+  //       }
+  //     }
+  //   });
+  // }
 
-        if (!currentDateExists) {
-          const newEntry = {
-            halfDay: false,
-            hoursOfWork: "",
-            logoutTime: "",
-            uncompleteDay: false,
-            status: "Absent",
-            loginTime: "",
-            date: currentDate,
-            fullDay: false,
-          };
+  // function fillMissingDates(data, date) {
+  //   const lastUpdatedDate = new Date(date);
+  //   lastUpdatedDate.setDate(lastUpdatedDate.getDate() + 1);
+  //   const currentDate = new Date();
+  //   const newData = [];
 
-          obj.attendance.push(newEntry);
+  //   if (date) {
+  //     for (
+  //       let date = new Date(lastUpdatedDate);
+  //       date <= currentDate;
+  //       date.setDate(date.getDate() + 1)
+  //     ) {
+  //       const dateString = date.toISOString();
 
-          try {
-            const employerDoc = doc(db, "employers", obj.id);
-            async function xyz() {
-              await updateDoc(employerDoc, {
-                attendance: arrayUnion(newEntry),
-              });
-            }
-            xyz();
-            toast.success("Updated Absent Employers");
-          } catch (error) {
-            toast.error("something went wrong");
-          }
-        }
-      }
-    });
-  }
+  //       // Convert the date string to a Date object
+  //       const attendanceDate = new Date(dateString);
 
-  useEffect(() => {
-    if (isFourPM) {
-      updateAbsentAttendance(employers);
-    }
-  }, [isFourPM, employers]);
+  //       // Define options for date formatting
+  //       const options = {
+  //         weekday: 'short',
+  //         year: 'numeric',
+  //         month: 'short',
+  //         day: 'numeric'
+  //       };
+
+  //       // Format the date using toLocaleDateString
+  //       const formattedDate = attendanceDate.toLocaleDateString('en-US', options);
+
+  //       const existingEntry = data.find((entry) => entry.date === dateString);
+
+  //       // If no entry exists for the current date, add an Absent entry
+  //       if (!existingEntry) {
+  //         const newEntry = {
+  //           halfDay: false,
+  //           hoursOfWork: "",
+  //           logoutTime: "",
+  //           uncompleteDay: false,
+  //           status: "Absent",
+  //           loginTime: "",
+  //           date: formattedDate,
+  //           fullDay: false,
+  //         };
+  //         newData.push(newEntry);
+  //       } else {
+  //         newData.push(existingEntry);
+  //       }
+  //     }
+  //   }
+    
+  //   return [...data, ...newData];
+  // }
+
+  // useEffect(() => {
+  //   updateAbsentAttendance(employers);
+  // }, []);
 
   const findHoursOfWork = (loginTime = "", logoutTime = "") => {
     const [hours1, minutes1, seconds1] = loginTime?.split(":").map(Number);
@@ -196,11 +234,11 @@ const MyCalendar = ({ isFourPM, time }) => {
   useEffect(() => {
     const getEmployers = async () => {
       try {
-          const data = await getDocs(employersCollectionRef);
-          setEmployers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-          setLoading(false);
+        const data = await getDocs(employersCollectionRef);
+        setEmployers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setLoading(false);
       } catch (e) {
-        console.log(e.message)
+        console.log(e.message);
       }
     };
 
@@ -242,7 +280,7 @@ const MyCalendar = ({ isFourPM, time }) => {
 
   return (
     <>
-      <MainLayout time={time}>
+      <MainLayout>
         {loading ? (
           <Loading />
         ) : (

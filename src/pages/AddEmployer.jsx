@@ -30,7 +30,7 @@ function AddEmployer() {
   return (
     <>
       <MainLayout>
-        <htmlForm onSubmit={(e) => e.preventDefault()} method="post">
+        <form onSubmit={(e) => e.preventDefault()} method="post">
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -174,7 +174,7 @@ function AddEmployer() {
               Save
             </button>
           </div>
-        </htmlForm>
+        </form>
       </MainLayout>
     </>
   );

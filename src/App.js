@@ -11,22 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
-  const [time, setTime] = useState(new Date());
-  const [isFourPM, setIsFourPM] = useState(false);
-
-  useEffect(() => {
-    const timerID = setInterval(() => {
-      const newTime = new Date();
-      setTime(newTime);
-    }, 1000);
-    return () => clearInterval(timerID);
-  }, []);
-
-  useEffect(() => {
-    if (time.getHours() >= 16 && time.getMinutes() >= 0 && !isFourPM) {
-      setIsFourPM(true);
-    }
-  }, [time, isFourPM]);
 
   return (
     <div className="App">
@@ -36,7 +20,7 @@ function App() {
         <Route path="/" element={<Signup />} /> */}
         <Route
           path="/"
-          element={<Attendance time={time.toLocaleTimeString()} isFourPM={isFourPM} />}
+          element={<Attendance />}
         />
         <Route path="/:id" element={<EachAttendance />} />
         <Route path="/add-employer" element={<AddEmployer />} />

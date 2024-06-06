@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
@@ -88,22 +88,22 @@ const EachAttendance = () => {
           <Loading />
         ) : (
           <>
-            <div class="rounded-md bg-indigo-600 text-white font-semibold mb-4">
-              <div class="border-b border-gray-900/10 p-2">
-                <div class="grid gap-x-6 gap-y-8 grid-cols-12">
-                  <div class="sm:col-span-2 md:col-span-3 sm:col-start-1">
+            <div className="rounded-md bg-indigo-600 text-white font-semibold mb-4">
+              <div className="border-b border-gray-900/10 p-2">
+                <div className="grid gap-x-6 gap-y-8 grid-cols-12">
+                  <div className="sm:col-span-2 md:col-span-3 sm:col-start-1">
                     Employer Name: {employer.name}
                   </div>
 
-                  <div class="sm:col-span-2 md:col-span-3">
+                  <div className="sm:col-span-2 md:col-span-3">
                     Email: {employer.email} <br />
                   </div>
 
-                  <div class="sm:col-span-2 md:col-span-3">
+                  <div className="sm:col-span-2 md:col-span-3">
                     Phone: {employer.phone}
                   </div>
 
-                  <div class="sm:col-span-2 md:col-span-3">
+                  <div className="sm:col-span-2 md:col-span-3">
                     Salary P/A: {employer.salaryPerAnnum}
                   </div>
                 </div>
@@ -124,4 +124,4 @@ const EachAttendance = () => {
   );
 }
 
-export default memo(EachAttendance);
+export default EachAttendance;
